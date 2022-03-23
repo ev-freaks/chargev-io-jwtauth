@@ -1,0 +1,22 @@
+{
+  "name": "chargev-io-jwtauth",
+  "version": "1.0.0",
+  "description": "Generate JWT Tokens to Authenticate against the chargev.io API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ev-freaks/chargev-io-jwtauth.git"
+  },
+  "keywords": [
+    "chargEV"
+  ],
+  "author": "Remus Lazar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ev-freaks/chargev-io-jwtauth/issues"
+  },
+  "homepage": "https://github.com/ev-freaks/chargev-io-jwtauth#readme"
+}
