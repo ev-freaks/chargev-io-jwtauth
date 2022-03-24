@@ -33,8 +33,7 @@ export CHARGEV_IO_API="https://chargev-staging.io.ev-freaks.com/api/apiuser/"
 #export CHARGEV_IO_API="https://io.chargev.app/api/apiuser/"
 ```
 
-
-## Generate a JWT Token
+### Generate RSA Keypair
 
 ```shell
 # generate a brand new key for testing purposes
@@ -51,7 +50,13 @@ Securely transfer the public key to ev-freaks.com. You will get an unique `kid` 
 
 ```shell
 export kid=60d9aca1cf439e00c15ec8fe # put your unique kid here
+```
 
+
+## Generate a JWT Token
+
+
+```shell
 token="$(npm -s start -- --key chargev-io-api-test.pem --kid $kid)"
 ```
 
