@@ -16,6 +16,7 @@ Clone the repo and build:
 ```shell
 git clone https://github.com/ev-freaks/chargev-io-jwtauth.git
 cd chargev-io-jwtauth
+npm i
 npm run build
 ```
 
@@ -78,14 +79,15 @@ curl -H "Authorization: Bearer $token" $CHARGEV_IO_API/locations'?lat=48.776&lng
 
 ### Query Params
 
-| Name           | Type     | Description                                           | Example              | Default Value |
-|----------------|----------|-------------------------------------------------------|----------------------|---------------|
-| lat            | Number   | Latitude of the center point (for nearby queries)     | 48.776               | -             |
-| lng            | Number   | Longitude of the center point (for nearby queries)    | 9.183                | -             |
-| radius         | Number   | Radius for nearby queries, in meters                  | 500                  | -             |
-| limit          | Number   | Limit the response size.                              |                      | 30            |
-| offset         | Number   | Skip this given number of records, e.g. when limit >0 | 30                   | 0             |
+| Name           | Type     | Description                                           | Example             | Default Value |
+|----------------|----------|-------------------------------------------------------|---------------------|---------------|
+| lat            | Number   | Latitude of the center point (for nearby queries)     | 48.776              | -             |
+| lng            | Number   | Longitude of the center point (for nearby queries)    | 9.183               | -             |
+| radius         | Number   | Radius for nearby queries, in meters                  | 500                 | -             |
+| limit          | Number   | Limit the response size.                              |                     | 30            |
+| offset         | Number   | Skip this given number of records, e.g. when limit >0 | 30                  | 0             |
 | desired-fields | String[] | A (csv) list of paths to be selected                  | ocpi.evses,updatedAt |               |
+| updated | Date String | Filter records being updated later than this timestamp | 2022-03-24T10:48:23.226Z                    | - |
 
 
 ## Author
