@@ -27,10 +27,10 @@ npm run build
 #export CHARGEV_IO_API="http://localhost:3000/api/apiuser"
 
 # use the staging environment 
-export CHARGEV_IO_API="https://chargev-staging.io.ev-freaks.com/api/apiuser/"
+export CHARGEV_IO_API="https://chargev-staging.io.ev-freaks.com/api/apiuser"
 
 # use the production environment
-#export CHARGEV_IO_API="https://io.chargev.app/api/apiuser/"
+#export CHARGEV_IO_API="https://io.chargev.app/api/apiuser"
 ```
 
 ### Generate RSA Keypair
