@@ -4,6 +4,21 @@
 
 This repository holds some scripts and documentation describing how to access the EV Freaks chargev.io Backend REST API.
 
+## Basics
+
+In order to access the chargev.io API, a JWT token is required. In a nutshell, the token will be signed using the private key and the remote (chargev.io Backend) will check the signature using the public key.
+
+
+## Setup
+
+Clone the repo and build:
+
+```shell
+git clone https://github.com/ev-freaks/chargev-io-jwtauth.git
+cd chargev-io-jwtauth
+npm run build
+```
+
 ## Generate a JWT Token
 
 ```shell
@@ -20,9 +35,9 @@ cat chargev-io-api-test.pub
 Securely transfer the public key to ev-freaks.com. You will get an unique `kid` identifier. E.g. use that to generate valid JWT tokens:
 
 ```shell
-export kid=60d9aca1cf439e00c15ec8fe
+export kid=60d9aca1cf439e00c15ec8fe # put your unique kid here
 
-token="$(npm start -- --key chargev-io-api-test.pem --kid $kid --iss test)"
+token="$(npm -s start -- --key chargev-io-api-test.pem --kid $kid)"
 ```
 
 Then, try to access the API:

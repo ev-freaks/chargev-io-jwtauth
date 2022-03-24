@@ -8,10 +8,7 @@ const generateJWT = async (privKey: string, kid: string, iss: string, expire: nu
     alg: 'ES256',
   };
 
-  const uid = '123-dev'
-
   const payload = {
-    uid,
     iss,
     iat: Math.round(Date.now() / 1000),
     exp: Math.round((Date.now() / 1000) + expire),
@@ -24,7 +21,11 @@ const generateJWT = async (privKey: string, kid: string, iss: string, expire: nu
 const main = async () => {
   const argv = require('minimist')(process.argv.slice(2));
   const key = fs.readFileSync(argv.key).toString();
-  const token = await generateJWT(key, argv.kid, argv.iss,argv.expire ? +argv.expire : undefined);
+
+  // see https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.1
+  const iss = 'https://github.com/ev-freaks/chargev-io-jwtauth';
+
+  const token = await generateJWT(key, argv.kid, iss,argv.expire ? +argv.expire : undefined);
 
   console.log(token);
 };
