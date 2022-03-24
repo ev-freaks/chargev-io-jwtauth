@@ -19,6 +19,20 @@ cd chargev-io-jwtauth
 npm run build
 ```
 
+### Set env vars
+
+```shell
+# use the local docker environment (for development purposes)
+#export CHARGEV_IO_API="http://localhost:3000/api/apiuser"
+
+# use the staging environment 
+export CHARGEV_IO_API="https://chargev-staging.io.ev-freaks.com/api/apiuser/"
+
+# use the production environment
+#export CHARGEV_IO_API="https://io.chargev.app/api/apiuser/"
+```
+
+
 ## Generate a JWT Token
 
 ```shell
@@ -42,27 +56,36 @@ token="$(npm -s start -- --key chargev-io-api-test.pem --kid $kid)"
 
 Then, try to access the API:
 
-Access the dev environment (running in docker):
-
 ```shell
-curl -H "Authorization: Bearer $token" http://localhost:3000/api/apiuser/ping
+curl -H "Authorization: Bearer $token" $CHARGEV_IO_API/ping
 ```
 
-Access the staging environment>
+## Locations Endpoint
+
+Use this endpoint to fetch EV Locations data in OCPI format.
+
+### Prerequisites
+
+- a valid JWT token in the `$token` shell environment variable, see section above.
+
+### Examples
+
+Fetch location data near-by a given coordinate and radius, e.g. [Nearby Stuttgart](https://www.google.de/maps/@48.776,9.183,15z) using a limit of 10:
 
 ```shell
-curl -H "Authorization: Bearer $token" https://chargev-staging.io.ev-freaks.com/api/apiuser/ping
+curl -H "Authorization: Bearer $token" $CHARGEV_IO_API/locations'?lat=48.776&lng=9.183&radius=500&limit=10'
 ```
 
-Access the production environment:
+### Query Params
 
-```shell
-curl -H "Authorization: Bearer $token" https://io.chargev.app/api/apiuser/ping
-```
-
-
-
-t.b.c.
+| Name           | Type     | Description                                           | Example              | Default Value |
+|----------------|----------|-------------------------------------------------------|----------------------|---------------|
+| lat            | Number   | Latitude of the center point (for nearby queries)     | 48.776               | -             |
+| lng            | Number   | Longitude of the center point (for nearby queries)    | 9.183                | -             |
+| radius         | Number   | Radius for nearby queries, in meters                  | 500                  | -             |
+| limit          | Number   | Limit the response size.                              |                      | 30            |
+| offset         | Number   | Skip this given number of records, e.g. when limit >0 | 30                   | 0             |
+| desired-fields | String[] | A (csv) list of paths to be selected                  | ocpi.evses,updatedAt |               |
 
 
 ## Author
