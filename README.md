@@ -35,6 +35,8 @@ export CHARGEV_IO_API="https://chargev-staging.io.ev-freaks.com/api/apiuser/"
 
 ### Generate RSA Keypair
 
+Generate a new RSA Keypair; keep the private key private and hand out the public key to the remote party.
+
 ```shell
 # generate a brand new key for testing purposes
 openssl ecparam -genkey -name prime256v1 -noout -out chargev-io-api-test.pem
@@ -79,8 +81,27 @@ Use this endpoint to fetch EV Locations data in OCPI format.
 Fetch location data near-by a given coordinate and radius, e.g. [Nearby Stuttgart](https://www.google.de/maps/@48.776,9.183,15z) using a limit of 10:
 
 ```shell
-curl -H "Authorization: Bearer $token" $CHARGEV_IO_API/locations'?lat=48.776&lng=9.183&radius=500&limit=10'
+curl -sH "Authorization: Bearer $token" $CHARGEV_IO_API/locations'?lat=48.776&lng=9.183&radius=500&limit=10'
 ```
+
+Fetch the latest 10 EVSE Status Updates (for all locations):
+
+```shell
+curl -sH "Authorization: Bearer $token" $CHARGEV_IO_API/locations'?desired-fields=updatedAt,ocpi.evses.evse_id,ocpi.evses.status,ocpi.evses.last_updated&limit=10'
+```
+
+Fetch status updates for all locations after a specific timestamp:
+
+```shell
+curl -sH "Authorization: Bearer $token" $CHARGEV_IO_API/locations'?desired-fields=updatedAt,ocpi.evses.evse_id,ocpi.evses.status,ocpi.evses.last_updated&updated=2022-03-24T10:48:23.226Z&limit=10'
+```
+
+Fetch the full OCPI data for all locations after a specific timestamp, limit=100:
+
+```shell
+curl -sH "Authorization: Bearer $token" $CHARGEV_IO_API/locations'?desired-fields=updatedAt,ocpi&updated=2022-03-24T10:48:23.226Z&limit=100'
+```
+
 
 ### Query Params
 
