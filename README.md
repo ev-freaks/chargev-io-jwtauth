@@ -84,12 +84,6 @@ Fetch location data near-by a given coordinate and radius, e.g. [Nearby Stuttgar
 curl -sH "Authorization: Bearer $token" $CHARGEV_IO_API/locations'?lat=48.776&lng=9.183&radius=500&limit=10'
 ```
 
-Fetch the latest 10 EVSE Status Updates (for all locations):
-
-```shell
-curl -sH "Authorization: Bearer $token" $CHARGEV_IO_API/locations'?desired-fields=updatedAt,ocpi.evses.evse_id,ocpi.evses.status,ocpi.evses.last_updated&limit=10'
-```
-
 Fetch status updates for all locations after a specific timestamp:
 
 ```shell
@@ -105,15 +99,18 @@ curl -sH "Authorization: Bearer $token" $CHARGEV_IO_API/locations'?desired-field
 
 ### Query Params
 
-| Name           | Type     | Description                                           | Example             | Default Value |
-|----------------|----------|-------------------------------------------------------|---------------------|---------------|
-| lat            | Number   | Latitude of the center point (for nearby queries)     | 48.776              | -             |
-| lng            | Number   | Longitude of the center point (for nearby queries)    | 9.183               | -             |
-| radius         | Number   | Radius for nearby queries, in meters                  | 500                 | -             |
-| limit          | Number   | Limit the response size.                              |                     | 30            |
-| offset         | Number   | Skip this given number of records, e.g. when limit >0 | 30                  | 0             |
-| desired-fields | String[] | A (csv) list of paths to be selected                  | ocpi.evses,updatedAt |               |
-| updated | Date String | Filter records being updated later than this timestamp | 2022-03-24T10:48:23.226Z                    | - |
+| Name           | Type        | Description                                            | Example                  | Default Value |
+|----------------|-------------|--------------------------------------------------------|--------------------------|---------------|
+| lat            | Number      | Latitude of the center point (for nearby queries)      | 48.776                   | -             |
+| lng            | Number      | Longitude of the center point (for nearby queries)     | 9.183                    | -             |
+| radius         | Number      | Radius for nearby queries, in meters                   | 500                      | -             |
+| limit          | Number      | Limit the response size.                               |                          | 30            |
+| offset         | Number      | Skip this given number of records, e.g. when limit >0  | 30                       | 0             |
+| desired-fields | String[]    | A (csv) list of paths to be selected                   | ocpi.evses,updatedAt     |               |
+| updated        | Date String | Filter records being updated later than this timestamp | 2022-03-24T10:48:23.226Z | -             |
+| sort_field     | String      | The name of the field for sorting                      | updatedAt                | -             |
+| sort_mode      | asc,desc    | The sort direction                                     | desc                     | -             |
+
 
 ### Full Load
 
@@ -124,6 +121,14 @@ Use a batch size between 500..2500, the sweet spot should be around 1000, this a
 ### Incremental updates
 
 To get incremental updates (records updated after a given timestamp), leverage the `updated` parameter. This will also implictly set the ordering to `createdAt` ASC, so the use of both `offset` and `limit` should also work nicely.
+
+### Get latest updates
+
+To get the 10 latest updates, do leverage the sort_* and limit parameters, e.g.:
+
+```shell
+curl -sH "Authorization: Bearer $token" $CHARGEV_IO_API/locations'?desired-fields=updatedAt,ocpi.evses.evse_id,ocpi.evses.status,ocpi.evses.last_updated&sort_field=updatedAt&sort_mode=desc&limit=10'
+```
 
 
 ## Author
