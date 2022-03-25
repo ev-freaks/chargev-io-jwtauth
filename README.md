@@ -115,6 +115,16 @@ curl -sH "Authorization: Bearer $token" $CHARGEV_IO_API/locations'?desired-field
 | desired-fields | String[] | A (csv) list of paths to be selected                  | ocpi.evses,updatedAt |               |
 | updated | Date String | Filter records being updated later than this timestamp | 2022-03-24T10:48:23.226Z                    | - |
 
+### Full Load
+
+To perform a full data load, both the `offset` and `limit` parameters must be used. When doing so, the API will implicitly apply an ordering by `createdAt` ASC, so the use of offset will return reliable results.
+
+Use a batch size between 500..2500, the sweet spot should be around 1000, this also depends on the data requested (`desired-fields` parameter).
+
+### Incremental updates
+
+To get incremental updates (records updated after a given timestamp), leverage the `updated` parameter. This will also implictly set the ordering to `createdAt` ASC, so the use of both `offset` and `limit` should also work nicely.
+
 
 ## Author
 
